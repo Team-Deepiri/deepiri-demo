@@ -1,9 +1,29 @@
 {
   "name": "demo-repo",
   "version": "0.2.0",
-  "description": "A sample package.json",
+  "description": "A sample package.json for CI/CD testing",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . && htmlhint **/*.html",
+    "lint:fix": "eslint . --fix && htmlhint **/*.html --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "echo 'No tests configured yet' && exit 0",
+    "prepare": "husky install",
+    "pre-commit": "npm run format:check && npm run lint"
+  },
   "dependencies": {
     "@primer/css": "17.0.1"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "htmlhint": "^1.1.4",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrb00013/deepiri-demo.git"
+  }
 }
