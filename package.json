@@ -1,6 +1,6 @@
 {
   "name": "demo-repo",
-  "version": "0.2.0",
+  "version": "1.1.0",
   "description": "A sample package.json for CI/CD testing",
   "main": "index.js",
   "scripts": {
