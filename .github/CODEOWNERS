@@ -1,0 +1,8 @@
+# Default owner for everything
+* @jrb00013
+
+# CI/CD workflows
+.github/workflows/ @jrb00013
+
+# Documentation
+*.md @jrb00013
