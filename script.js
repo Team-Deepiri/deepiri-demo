@@ -13,8 +13,8 @@ app.get('/run', (req, res) => {
 });
 
 app.get('/eval', (req, res) => {
-  // 🔥 Code injection
-  const result = eval(req.query.code);
+  // Treat user input as data, not executable code
+  const result = String(req.query.code ?? '');
   res.send(result);
 });
 
