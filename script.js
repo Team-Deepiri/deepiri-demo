@@ -1,9 +1,17 @@
 const express = require('express');
 const { exec } = require('child_process');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
-app.get('/run', (req, res) => {
+const runLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
+app.get('/run', runLimiter, (req, res) => {
   const userInput = req.query.cmd;
 
   // 🔥 Command injection
