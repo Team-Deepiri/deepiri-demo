@@ -1,12 +1,22 @@
 name: Lighthouse Audit
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: [main, dev]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE*'
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lighthouse:
+    timeout-minutes: 20
     name: Lighthouse Audit
     runs-on: ubuntu-latest
     steps:

@@ -3,9 +3,21 @@ on:
   issues:
     types: [opened]
   pull_request:
+    branches: [main, dev]
     types: [opened]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE*'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     permissions:
       issues: write

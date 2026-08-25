@@ -1,13 +1,21 @@
 name: CI
 
 on:
-  push:
-    branches: [main, develop]
   pull_request:
     branches: [main, develop]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE*'
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
+    timeout-minutes: 20
     name: Lint
     runs-on: ubuntu-latest
     steps:
@@ -30,6 +38,7 @@ jobs:
         run: npx htmlhint **/*.html
 
   format:
+    timeout-minutes: 20
     name: Format Check
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +58,7 @@ jobs:
         run: npm run format:check
 
   test:
+    timeout-minutes: 20
     name: Test
     runs-on: ubuntu-latest
     steps:

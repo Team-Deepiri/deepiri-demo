@@ -1,14 +1,24 @@
 name: Security
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: [main, dev]
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE*'
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   dependency-check:
+    timeout-minutes: 20
     name: Dependency Check
     runs-on: ubuntu-latest
     steps:
@@ -20,6 +30,7 @@ jobs:
         continue-on-error: true
 
   code-scanning:
+    timeout-minutes: 20
     name: Code Scanning
     runs-on: ubuntu-latest
     steps:
